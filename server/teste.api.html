@@ -1,0 +1,67 @@
+<html>
+  <head>
+      <title>Teste API</title>
+  </head>
+  <body>
+      Abra o console do browser para executar os testes:
+      <pre>
+        await buscarPessoas();
+        await adicionarPessoa({nome: "Daniel", sobrenome: "de Andrade Varela", apelido: "Varela"});
+        await buscarPessoa(43);
+        await alterarPessoa(43, {nome: "Daniel", sobrenome: "de Andrade Varela", apelido: "Varela"});
+        await excluirPessoa(43);
+      </pre>
+      <script>
+          // ENDEREÇO LOCAL ONDE A API SERÁ EXECUTADA.
+          const host = "http://localhost:3005";
+
+          // SOLICITA AO SERVIDOR: LISTAGEM DE DADOS DE TODAS AS PESSOAS.
+          async function buscarPessoas() {
+              const configReq = { method: "get" };
+              const req = await fetch(host+"/pessoa")
+              const res = await req.json();
+              return res;
+          }
+
+          // SOLICITA AO SERVIDOR: INSERÇÃO DE NOVA PESSOA.
+          async function adicionarPessoa(dadosDePessoa) {
+              const configReq = {
+                  method: "post",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(dadosDePessoa)
+              };
+              const req = await fetch(host+"/pessoa", configReq);
+              const res = await req.json();
+              return res;
+          }
+
+          // SOLICITA AO SERVIDOR: LISTAGEN DE DADOS DE UMA PESSOA ESPECÍFICA.
+          async function buscarPessoa(id) {
+              const configReq = { method: "get" };
+              const req = await fetch(host + "/pessoa/" + id)
+              const res = await req.json();
+              return res;
+          }
+
+          // SOLICITA AO SERVIDOR: ALTERAÇÂO DE DADOS DE UMA PESSOA ESPECÍFICA.
+          async function alterarPessoa(id, dadosDePessoa) {
+              const configReq = {
+                  method: "put",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(dadosDePessoa)
+              };
+              const req = await fetch(host + "/pessoa/" + id, configReq);
+              const res = await req.json();
+              return res;
+          }
+
+          // SOLICITA AO SERVIDOR: EXCLUISÃO DE DADIS DE UMA PESSOA ESPECÍFICA.
+          async function excluirPessoa(id) {
+              const configReq = { method: "delete" };
+              const req = await fetch(host + "/pessoa/" + id, configReq);
+              const res = await req.json();
+              return res;
+          }
+      </script>
+  </body>
+</html>
